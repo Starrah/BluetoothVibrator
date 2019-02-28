@@ -1,4 +1,4 @@
-package tech.rika.bluetoothviberator
+package cn.starrah.bluetoothvibrator2
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("tech.rika.bluetoothviberator", appContext.packageName)
+        assertEquals("cn.starrah.bluetoothvibrator2", appContext.packageName)
     }
 }

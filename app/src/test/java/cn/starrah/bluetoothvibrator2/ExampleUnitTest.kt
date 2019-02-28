@@ -1,4 +1,4 @@
-package tech.rika.bluetoothviberator
+package cn.starrah.bluetoothvibrator2
 
 import org.junit.Test
 

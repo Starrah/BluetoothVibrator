@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.media.session.MediaSession
 import android.net.wifi.WifiManager
 import android.os.Build
@@ -12,6 +13,8 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.support.v7.app.AlertDialog
 import android.view.KeyEvent
+import android.view.Window
+import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         @JvmStatic
         val hosts: MutableList<String> = ArrayList()
     }
-
+    var urll = ""
     val duration: Int
         get() = Integer.parseInt(txtDur.text.toString())
     private val localIP: String
@@ -54,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         override fun run() {
             while (true) {
                 sleep(500)
+                ac.urll = ac.txtDur4.text.toString()
                 if (ac.switch2.isChecked) {
                     val url = URL(ac.txtDur4.text.toString());
                     val urlConnection = url.openConnection() as HttpURLConnection
@@ -77,17 +81,35 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    fun changeAppBrightness(brightness : Int) {
+        val window = this.getWindow();
+        val lp = window.getAttributes();
+        if (brightness == -1) {
+            lp.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE;
+        } else {
+            lp.screenBrightness = (brightness) / 255f;
+        }
+        window.setAttributes(lp);
+    }
+
     val th = SendRequsetThread(this)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         //Start serve
         //Add server hosts
         //Set local IP
         //Initialize ArrayAdapter
         //Set fab click
         th.start()
+        changeAppBrightness(0)
+        //val intentfilter = IntentFilter()
+        //intentfilter.addAction("android.media.VOLUME_CHANGED_ACTION")
+        //val volumeReceiver = VolumeReceiver(this)
+        //registerReceiver(volumeReceiver, intentfilter)
 
 
         //Register media button event
